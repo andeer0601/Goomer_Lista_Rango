@@ -1,28 +1,17 @@
 ﻿import express from 'express'
-import { getRepository } from 'typeorm'
+import path from 'path'
+import 'express-async-errors'
 
 import './database/connection'
+
+import routes from './routes'
+import errorHandler from './errors/handler'
 
 const app = express()
 
 app.use(express.json())
-
-
-app.post('/restaurant', (req, res) => {
-    
-    const { 
-        name,
-        address,
-        week_opens_at,
-        week_closes_at,
-        weekend_opens_at,
-        weekend_closes_at
-    } = req.body
-    
-    res.json({
-        message: "Funcionando!"
-    })
-})
-
+app.use(routes)
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')))
+app.use(errorHandler)
 
 app.listen(3333)
