@@ -2,7 +2,7 @@
 
 
 
-## Challenge - Developer Backend
+## Challenge - Developer Backend - GOOMER LISTA RANGO
 
 
 
@@ -22,7 +22,7 @@ a Configuração inicial deve ser feita com os seguintes comandos
   - Efetuar a instalação de todas as dependências declaradas no arquivo "package.json"
 - "yarn typeorm migration:run"
   - Executar os scripts para criação das tabelas do Banco de Dados
-- "yarn dev"
+- "yarn start"
   - Iniciar a API
 
 ### Requisitos
@@ -36,6 +36,10 @@ a Configuração inicial deve ser feita com os seguintes comandos
   	- multer
   	- express-async-errors
   	- yup
+    - dotenv
+    - moment
+
+- Todas as dependências serão instaladas ao executar o comando "yarn install"
 
 ### Estrutura
 
@@ -44,9 +48,10 @@ a Configuração inicial deve ser feita com os seguintes comandos
     - database.sqlite: Banco de Dados SQLite
     - connection.ts: Iniciar a conexão com o banco
     - pasta Migrations: Arquivos de criaçao de tabelas gerados utilizando a biblioteca "typeorm"
-- "src/models"
-  - Contém o modelo das tabelas do Banco de Dados, detalhando os campos e os tipos de cada campo
-- 
+- "src/errors"
+  - Contém os arquivos necessários para tratamento de erros
+- "src/helpers"
+  - Contém as funções "globais" da API
 
 
 
