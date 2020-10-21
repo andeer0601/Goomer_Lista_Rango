@@ -8,6 +8,7 @@ import RestaurantView from '../views/restaurants_view'
 
 export default {
 
+    // Mostrar todos
     async index(req: Request, res: Response){
 
         const restaurantRepository = getRepository(Restaurant)
@@ -20,6 +21,7 @@ export default {
 
     },
 
+    // Mostrar 1
     async show(req: Request, res: Response){
 
         const { id } = req.params
@@ -34,6 +36,7 @@ export default {
 
     },
 
+    // Criar
     async create(req: Request, res: Response){
 
         const { 
@@ -88,5 +91,44 @@ export default {
         
         res.status(201).json(restaurant)
         
+    },
+
+    // Alterar
+    async alter(req: Request, res: Response){
+
+        const { id } = req.params
+    
+        const restaurantRepository = getRepository(Restaurant)
+        const restaurantEntity = new Restaurant()
+
+        const restaurantOriginal = await restaurantRepository.findOneOrFail(id);
+
+
+        restaurantEntity.name = ( req.body.name ? req.body.name : restaurantOriginal.name )
+        restaurantEntity.address = ( req.body.address ? req.body.address : restaurantOriginal.address )
+        restaurantEntity.week_opens_at = ( req.body.week_opens_at ? req.body.week_opens_at : restaurantOriginal.week_opens_at )
+        restaurantEntity.week_closes_at = ( req.body.week_closes_at ? req.body.week_closes_at : restaurantOriginal.week_closes_at)
+        restaurantEntity.weekend_opens_at = ( req.body.weekend_opens_at ? req.body.weekend_opens_at : restaurantOriginal.weekend_opens_at )
+        restaurantEntity.weekend_closes_at = ( req.body.weekend_closes_at ? req.body.weekend_closes_at : restaurantOriginal.weekend_closes_at )
+
+    
+        // Gravando no Banco
+        await restaurantRepository.update(id, restaurantEntity)
+        
+        res.json({ Mensagem: `Restaurante [ID ${id}] atualizado com sucesso`})
+        
+    },
+
+    // Deletar
+    async delete(req: Request, res: Response){
+
+        const { id } = req.params
+
+        const restaurantRepository = getRepository(Restaurant)
+
+        await restaurantRepository.delete(id);
+
+        res.json({ Mensagem: `Restaurante [ID ${id}] excluido com sucesso`})
+
     },
 }

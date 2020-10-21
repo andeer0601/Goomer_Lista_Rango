@@ -1,5 +1,6 @@
 ﻿import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn } from 'typeorm'
 import Image from './image'
+import Product from './product'
 
 @Entity('restaurants')
 export default class Restaurant {
@@ -24,6 +25,10 @@ export default class Restaurant {
 
     @Column()
     weekend_closes_at: string;
+
+    @OneToMany(() => Product, product => product.restaurant, { cascade: ['insert', 'update'] })
+    @JoinColumn({ name: 'restaurant_id' })
+    products: Product;
 
     @OneToMany(() => Image, image => image.restaurant, { cascade: ['insert', 'update'] })
     @JoinColumn({ name: 'restaurant_id' })

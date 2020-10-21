@@ -16,6 +16,10 @@ export class createProducts1603156380082 implements MigrationInterface {
                 generationStrategy: 'increment'
               },
               {
+                name: 'restaurant_id',
+                type: 'integer'
+              },
+              {
                 name: 'name',
                 type: 'varchar'
               },
@@ -46,13 +50,16 @@ export class createProducts1603156380082 implements MigrationInterface {
               },
               {
                 name: 'sale_dow',
-                type: 'text',
+                type: 'integer',
                 isArray: true
               },
               {
-                name: 'sale_schedule',
-                type: 'varchar',
-                isArray: true
+                name: 'sale_schedule_start',
+                type: 'varchar'
+              },
+              {
+                name: 'sale_schedule_end',
+                type: 'varchar'
               },
             ]
           }))
