@@ -4,6 +4,7 @@ import Restaurant from "../models/restaurant"
 import * as Yup from 'yup'
 
 import RestaurantView from '../views/restaurants_view'
+import functions from '../helpers/functions'
 
 
 export default {
@@ -60,10 +61,10 @@ export default {
         const data = {
             name,
             address,
-            week_opens_at,
-            week_closes_at,
-            weekend_opens_at,
-            weekend_closes_at,
+            week_opens_at: functions.round15(week_opens_at),
+            week_closes_at: functions.round15(week_closes_at),
+            weekend_opens_at: functions.round15(weekend_opens_at),
+            weekend_closes_at: functions.round15(weekend_closes_at),
             images
         }
 
@@ -106,10 +107,10 @@ export default {
 
         restaurantEntity.name = ( req.body.name ? req.body.name : restaurantOriginal.name )
         restaurantEntity.address = ( req.body.address ? req.body.address : restaurantOriginal.address )
-        restaurantEntity.week_opens_at = ( req.body.week_opens_at ? req.body.week_opens_at : restaurantOriginal.week_opens_at )
-        restaurantEntity.week_closes_at = ( req.body.week_closes_at ? req.body.week_closes_at : restaurantOriginal.week_closes_at)
-        restaurantEntity.weekend_opens_at = ( req.body.weekend_opens_at ? req.body.weekend_opens_at : restaurantOriginal.weekend_opens_at )
-        restaurantEntity.weekend_closes_at = ( req.body.weekend_closes_at ? req.body.weekend_closes_at : restaurantOriginal.weekend_closes_at )
+        restaurantEntity.week_opens_at = ( req.body.week_opens_at ? functions.round15(req.body.week_opens_at) : restaurantOriginal.week_opens_at )
+        restaurantEntity.week_closes_at = ( req.body.week_closes_at ? functions.round15(req.body.week_closes_at) : restaurantOriginal.week_closes_at)
+        restaurantEntity.weekend_opens_at = ( req.body.weekend_opens_at ? functions.round15(req.body.weekend_opens_at) : restaurantOriginal.weekend_opens_at )
+        restaurantEntity.weekend_closes_at = ( req.body.weekend_closes_at ? functions.round15(req.body.weekend_closes_at) : restaurantOriginal.weekend_closes_at )
 
     
         // Gravando no Banco

@@ -3,11 +3,13 @@ import { getRepository } from "typeorm"
 import Product from "../models/product"
 import * as Yup from 'yup'
 
-import ProductView from '../views/products_view'
+import functions from '../helpers/functions'
 
+import ProductView from '../views/products_view'
 
 export default {
 
+    // Buscar
     async index(req: Request, res: Response){
 
         const { restaurant } = req.params
@@ -23,6 +25,7 @@ export default {
 
     },
 
+    // Criar
     async create(req: Request, res: Response){
     
         const { restaurant } = req.params
@@ -56,8 +59,8 @@ export default {
             sale_description,
             sale_price,
             sale_dow,
-            sale_schedule_start,
-            sale_schedule_end,
+            sale_schedule_start: functions.round15(sale_schedule_start),
+            sale_schedule_end: functions.round15(sale_schedule_end),
             restaurant,
             images
         }
@@ -104,10 +107,6 @@ export default {
             where: pr => { pr.where(`id = ${id}`).andWhere(`restaurant_id = ${restaurant}`)}
         });
 
-        const { name } = req.body
-        console.log(`Nome: ${name}`)
-        // console.table(productOriginal)
-
         productEntity.name = ( req.body.name ? req.body.name : productOriginal.name )
         productEntity.price = ( req.body.price ? req.body.price : productOriginal.price )
         productEntity.category = ( req.body.category ? req.body.category : productOriginal.category )
@@ -115,8 +114,8 @@ export default {
         productEntity.sale_description = ( req.body.sale_description ? req.body.sale_description : productOriginal.sale_description )
         productEntity.sale_price = ( req.body.sale_price ? req.body.sale_price : productOriginal.sale_price )
         productEntity.sale_dow = ( req.body.sale_dow ? req.body.sale_dow : productOriginal.sale_dow )
-        productEntity.sale_schedule_start = ( req.body.sale_schedule_start ? req.body.sale_schedule_start : productOriginal.sale_schedule_start )
-        productEntity.sale_schedule_end = ( req.body.sale_schedule_end ? req.body.sale_schedule_end : productOriginal.sale_schedule_end )
+        productEntity.sale_schedule_start = ( req.body.sale_schedule_start ? functions.round15(req.body.sale_schedule_start) : productOriginal.sale_schedule_start )
+        productEntity.sale_schedule_end = ( req.body.sale_schedule_end ? functions.round15(req.body.sale_schedule_end) : productOriginal.sale_schedule_end )
         productEntity.restaurant = ( req.body.restaurant ? req.body.restaurant : restaurant )
 
 
@@ -139,4 +138,5 @@ export default {
         res.json({ Mensagem: `Produto [ID ${id}] excluido com sucesso`})
 
     },
+    
 }
